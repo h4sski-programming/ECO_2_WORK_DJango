@@ -1,0 +1,52 @@
+{% extends 'eco2work_app/base.html' %}
+{% block title %}Profile {{ user.username }}{% endblock %}
+{% block content %}
+<div>
+    <h3>{{ user.id }} {{ user.username }} # {{ user.first_name }} {{ user.last_name }}</h3>
+</div>
+
+<div>
+    <table class="table table-sm">
+        <tr class="hidden">
+            <th>ID</th>
+            <th>Username</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Email</th>
+        </tr>
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td>{{ user.email }}</td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <div class="row mb-2">
+        <div class="col"><h4>Activities list</h4></div>
+        <a href="/activity/" class="btn btn-outline-success">Edit activities</a>
+    </div>
+
+    <table class="table table-sm">
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Distance [km]</th>
+            <th>Vehicle</th>
+            <th>Update time</th>
+        </tr>
+        {% for a in activity %}
+        <tr>
+            <td>{{ a.id }}</td>
+            <td>{{ a.date.isoformat }}</td>
+            <td>{{ a.distance }}</td>
+            <td>{{ a.vehicle }}</td>
+            <td>{{ a.update_date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

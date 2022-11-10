@@ -1,0 +1,77 @@
+{% extends 'eco2work_app/base.html' %}
+{% block title %}Profile {{ user.username }}{% endblock %}
+{% block content %}
+<div>
+    <h4>{{ user.id }} {{ user.username }} # {{ user.first_name }} {{ user.last_name }}</h4>
+</div>
+<div>
+    <table class="table table-sm">
+        <tr>
+            <th>Date</th>
+            <th>Distance [km]</th>
+            <th>Vehicle</th>
+            <th></th>
+        </tr>
+        <tr>
+            <form id="new_activity">
+                {% csrf_token %}
+                <td>
+                    <input type="date" name="date" class="form-control">
+                </td>
+                <td>
+                    <input type="number" min="0" placeholder="Must be >0" name="distance" id="distance" class="form-control">
+                </td>
+                <td>
+                    <select name="vehicle" form="new_activity" class="custom-select">
+                        {% for v in vehicle_list %}
+                            <option value="{{ v }}">{{ v }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td class="btn-group w-100">
+                    <button type="submit" name="new_activity" class="btn btn-outline-success w-50">Add</button>
+                    <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                </td>
+            </form>
+        </tr>
+
+        {% for a in activity %}
+            {% if today.month == a.date.month %}
+                <form id="edit_activity_{{ a.id }}">
+                    {% csrf_token %}
+                    <tr>
+                        <td>
+                            <a class="input-group-text text-muted">{{ a.date.isoformat }}</a>
+                        </td>
+                        <td>
+                            <input type="number" min="0" placeholder="{{ a.distance }}" name="distance" id="distance" class="form-control">
+                        </td>
+                        <td>
+                            <select name="vehicle" form="edit_activity_{{ a.id }}" class="custom-select">
+                                {% for v in vehicle_list %}
+                                    {% if v == a.vehicle %}
+                                        <option selected>{{ a.vehicle }}</option>
+                                    {% else %}
+                                        <option value="{{ v }}">{{ v }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td class="btn-group w-100">
+                            <button type="submit" name="update_activity{{ a.id }}" class="btn btn-outline-success w-50">Update</button>
+                            <button type="submit" name="delete_activity{{ a.id }}" class="btn btn-outline-danger">Delete</button>
+                        </td>
+                    </tr>
+                </form>
+            {% else %}
+                <tr>
+                    <td><a class="input-group-text text-muted">{{ a.date.isoformat }}</a></td>
+                    <td><a class="input-group-text text-muted">{{ a.distance }}</a></td>
+                    <td><a class="input-group-text text-muted">{{ a.vehicle }}</a></td>
+                    <td></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
