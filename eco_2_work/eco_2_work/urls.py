@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('eco2work_app.urls')),
     path('auth/', include('register.urls')),
+    path('', include('django.contrib.auth.urls')),
 ]

@@ -1,0 +1,17 @@
+{% extends 'eco2work_app/base.html' %}
+{% block title %}Login{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h4>Log in</h4>
+
+<form method="post" class="form-group">
+    {% csrf_token %}
+    {{ form|crispy }}
+
+    <p>Dont have an account? <a href="/auth/sign_in/">Create one here</a></p>
+    <button type="submit" class=" btn btn-success">
+        Login
+    </button>
+</form>
+{% endblock %}

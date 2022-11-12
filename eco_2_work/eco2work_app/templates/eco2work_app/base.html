@@ -19,16 +19,19 @@
 </head>
 <body>
     <div class="container my-3">
+      {% if user.is_authenticated %}
       <div class="row">
         <div class="btn-group col">
           <a href="/" class="btn btn-primary">ECO 2 WORK</a>
-          <a href="/profile/" class="btn btn-outline-secondary">Profile {{ user.first_name }} {{ user.last_name }}</a>
-          <a href="/auth/log_out" class="btn btn-outline-warning">Log-out</a>
+          <a href="/profile/" class="btn btn-outline-secondary">Profile</a>
+          <a href="/logout" class="btn btn-outline-warning">Log out</a>
         </div>
+        {% else %}
         <div class="btn-group col">
-          <a href="/auth/log_in" class="btn btn-primary">Log-in</a>
-          <a href="/auth/sign_in" class="btn btn-outline-success">Sign-in</a>
+          <a href="/login" class="btn btn-primary">Log in</a>
+          <a href="/auth/sign_in" class="btn btn-outline-success">Sign in</a>
         </div>
+        {% endif %}
       </div>
     </div>
 

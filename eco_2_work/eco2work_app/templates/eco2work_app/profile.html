@@ -2,7 +2,7 @@
 {% block title %}Profile {{ user.username }}{% endblock %}
 {% block content %}
 <div>
-    <h3>{{ user.id }} {{ user.username }} # {{ user.first_name }} {{ user.last_name }}</h3>
+    <h4>Profile {{ user.username }}</h4>
 </div>
 
 <div>
@@ -27,6 +27,7 @@
 <div>
     <div class="row mb-2">
         <div class="col"><h4>Activities list</h4></div>
+        <div class="col"><h4 class="col">Sum of your distance at {{ today.year }}-{{ today.month }} = {{ sum_distance }}</h4></div>
         <a href="/activity/" class="btn btn-outline-success">Edit activities</a>
     </div>
 
@@ -47,6 +48,14 @@
             <td>{{ a.update_date }}</td>
         </tr>
         {% endfor %}
+    </table>
+
+    <h5>Testing form</h5>
+    <table class="table table-sm">
+        <form>
+            {% csrf_token %}
+            {{ form }}
+        </form>
     </table>
 </div>
 {% endblock %}

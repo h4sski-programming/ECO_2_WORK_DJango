@@ -2,7 +2,10 @@
 {% block title %}Profile {{ user.username }}{% endblock %}
 {% block content %}
 <div>
-    <h4>{{ user.id }} {{ user.username }} # {{ user.first_name }} {{ user.last_name }}</h4>
+    <div class="row">
+        <h4 class="col">Your activities</h4>
+        <h4 class="col">Sum of your distance at {{ today.year }}-{{ today.month }} = {{ sum_distance }}</h4>
+    </div>
 </div>
 <div>
     <table class="table table-sm">
@@ -13,7 +16,7 @@
             <th></th>
         </tr>
         <tr>
-            <form id="new_activity">
+            <form method="post" id="new_activity">
                 {% csrf_token %}
                 <td>
                     <input type="date" name="date" class="form-control">
@@ -29,7 +32,7 @@
                     </select>
                 </td>
                 <td class="btn-group w-100">
-                    <button type="submit" name="new_activity" class="btn btn-outline-success w-50">Add</button>
+                    <button type="submit" name="new_activity" value="yes" class="btn btn-outline-success w-50">Add</button>
                     <button type="reset" class="btn btn-outline-secondary">Reset</button>
                 </td>
             </form>
@@ -37,7 +40,7 @@
 
         {% for a in activity %}
             {% if today.month == a.date.month %}
-                <form id="edit_activity_{{ a.id }}">
+                <form method="post" id="edit_activity_{{ a.id }}">
                     {% csrf_token %}
                     <tr>
                         <td>
@@ -58,8 +61,8 @@
                             </select>
                         </td>
                         <td class="btn-group w-100">
-                            <button type="submit" name="update_activity{{ a.id }}" class="btn btn-outline-success w-50">Update</button>
-                            <button type="submit" name="delete_activity{{ a.id }}" class="btn btn-outline-danger">Delete</button>
+                            <button type="submit" name="update" value="{{ a.id }}" class="btn btn-outline-success w-50">Update</button>
+                            <button type="submit" name="delete" value="{{ a.id }}" class="btn btn-outline-danger">Delete</button>
                         </td>
                     </tr>
                 </form>

@@ -34,7 +34,7 @@
             <th>Date</th>
             <th>Distance [km]</th>
             <th>Vehicle</th>
-            <th>Update time</th>
+            <th>User</th>
         </tr>
         {% for a in activity %}
         <tr>
@@ -42,7 +42,7 @@
             <td>{{ a.date.isoformat }}</td>
             <td>{{ a.distance }}</td>
             <td>{{ a.vehicle }}</td>
-            <td>{{ a.update_date }}</td>
+            <td>{{ a.user }}</td>
         </tr>
         {% endfor %}
     </table>
