@@ -3,8 +3,6 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from eco_2_work.eco2work_app.models import Activity
-
 
 class SigninForm(UserCreationForm):
     email = forms.EmailField(label='Email', required=False)
