@@ -49,28 +49,5 @@
         </tr>
         {% endfor %}
     </table>
-
-    <h5>Testing form</h5>
-    <table class="table table-sm">
-        <tr>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Distance [km]</th>
-            <th>Name</th>
-            <th>Name</th>
-        </tr>
-        <form>
-            {% csrf_token %}
-            <div class="form-group">
-                <tr>
-                    <td>{{ form.name }}</td>
-                    <td>{{ form.date }}</td>
-                    <td>{{ form.distance }}</td>
-                    <td>{{ form.vehicle }}</td>
-                    <td></td>
-                </tr>
-            </div>
-        </form>
-    </table>
 </div>
 {% endblock %}

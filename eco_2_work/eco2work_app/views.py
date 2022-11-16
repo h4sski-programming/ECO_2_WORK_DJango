@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 
@@ -69,16 +69,23 @@ def activity(response):
         vehicle = response.POST.get('vehicle')
         return [distance, vehicle]
 
+    def get_date_from_string(s):
+        y, m, d = s.split('-')
+        return date(year=int(y), month=int(m), day=int(d))
+
     if response.method == 'POST':
         if response.POST.get('new_activity'):
-            d = response.POST.get('date')
-            distance, vehicle = get_atributes()
-            activity_temp = Activity()
-            activity_temp.user = user
-            activity_temp.date = d
-            activity_temp.distance = distance
-            activity_temp.vehicle = vehicle
-            activity_temp.save()
+            d = get_date_from_string(response.POST.get('date'))
+            if not (d in Activity.objects.filter(user=user).values_list('date', flat=True)):
+                distance, vehicle = get_atributes()
+                activity_temp = Activity()
+                activity_temp.user = user
+                activity_temp.date = d
+                activity_temp.distance = distance
+                activity_temp.vehicle = vehicle
+                activity_temp.save()
+            else:
+                print(f'Date already has activity, please edit it.')
 
         elif response.POST.get('delete'):
             activity_id = response.POST.get('delete')
@@ -96,6 +103,11 @@ def activity(response):
                 f'Incorrect form POST action, not [new_activity, update, delete].')
 
     today = date.today()
+    month_start = today.replace(day=1)
+    next_month = month_start.replace(
+        month=month_start.month + 1)
+    month_end = next_month - datetime.timedelta(days=1)
+
     sum_distance = sum_activity_distance(
         user_id=user.id, y=today.year, m=today.month)
     activity = Activity.objects.filter(user=user.id).order_by('-date')
@@ -103,6 +115,8 @@ def activity(response):
 
     return render(response, 'eco2work_app/activity.html', {
         'today': today,
+        'month_start': month_start,
+        'month_end': month_end,
         'user': user,
         'activity': activity,
         'vehicle_list': vehicle_list,

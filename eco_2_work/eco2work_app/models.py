@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+CHOICES = ['bike', 'foot', 'scooter']
 
 
 class Activity(models.Model):
@@ -16,5 +17,5 @@ class Activity(models.Model):
         return f'{self.date} {self.user.username} {self.distance}'
 
     def get_vehicles(self):
-        list = ['bike', 'foot', 'scooter']
+        list = CHOICES
         return list

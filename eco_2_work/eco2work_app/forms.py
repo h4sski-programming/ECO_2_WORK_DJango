@@ -21,6 +21,8 @@ class TestingForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['date'].widget.attrs.update({
             'class': 'form-control',
+            'help_text': 'Pich date only from pending month.',
+            'error_message': 'Pich date only from pending month.',
         })
         self.fields['distance'].widget.attrs.update({
             'class': 'form-control',
